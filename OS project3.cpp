@@ -13,7 +13,7 @@ struct ArrInfo
 };
 
 
-//µ÷ÓÃ<stdlib.h>ÀïµÄqsortº¯Êı¶ø×¼±¸µÄcmpº¯Êı¡£´ÓĞ¡µ½´óÅÅĞò 
+//è°ƒç”¨<stdlib.h>é‡Œçš„qsortå‡½æ•°è€Œå‡†å¤‡çš„cmpå‡½æ•°ã€‚ä»å°åˆ°å¤§æ’åº 
 int cmp(const void *a,const void *b){
 	return *(int*)a-*(int*)b;
 }
@@ -23,22 +23,22 @@ DWORD WINAPI Qsort(LPVOID lpPara)
 	ArrInfo *arrinfo = (ArrInfo *)lpPara;
 	HANDLE hFileMap = OpenFileMapping(FILE_MAP_ALL_ACCESS, FALSE,"data");
 	VOID *hMap = MapViewOfFile(hFileMap,FILE_MAP_ALL_ACCESS,0,0,0);
-	//»ñµÃ¸÷¸öÏß³Ì¹²ÏíµÄÊı×éÊ×µØÖ·
+	//è·å¾—å„ä¸ªçº¿ç¨‹å…±äº«çš„æ•°ç»„é¦–åœ°å€
 	int *arr1 = (int *)hMap;
 
 	int left = arrinfo->start;
 	int right = arrinfo->end;
 	
-	qsort(arr1,right-left,sizeof(arr1[1]),cmp);//½øĞĞÅÅĞò 
+	qsort(arr1,right-left,sizeof(arr1[1]),cmp);//è¿›è¡Œæ’åº 
 
-	UnmapViewOfFile(hMap);//È¡ÏûÓ³Éä 
-	CloseHandle(hFileMap);//½áÊø¾ä±ú 
+	UnmapViewOfFile(hMap);//å–æ¶ˆæ˜ å°„ 
+	CloseHandle(hFileMap);//ç»“æŸå¥æŸ„ 
 	return 0;
 }
 
 int main()
 {
-	//´Óinput.txt¶ÁÈ¡Êı¾İ
+	//ä»input.txtè¯»å–æ•°æ®
 	ifstream file("input.txt");
 	int num = 1000000;
     vector<int> a;
@@ -49,24 +49,24 @@ int main()
 		a.push_back(x);
 	}
 
-	//´´½¨ÎÄ¼şÓ³Éä¶ÔÏó
+	//åˆ›å»ºæ–‡ä»¶æ˜ å°„å¯¹è±¡
 	HANDLE hFileMap = CreateFileMapping(INVALID_HANDLE_VALUE,NULL,PAGE_READWRITE,0,0x1000000,"data");
-	//½«ÎÄ¼şÊÓÍ¼Ó³Éäµ½±¾½ø³ÌµÄµØÖ·¿Õ¼ä
+	//å°†æ–‡ä»¶è§†å›¾æ˜ å°„åˆ°æœ¬è¿›ç¨‹çš„åœ°å€ç©ºé—´
 	VOID *hMap = MapViewOfFile(hFileMap,FILE_MAP_ALL_ACCESS,0,0,0);
 
-	//½«Êı×éÊ×µØÖ·¹ØÁªÓ³ÉäµØÖ·¿Õ¼äµÄÊ×µØÖ·£¬Ê¹ËüÃÇÖ¸ÏòÍ¬Ò»¿éÄÚ´æ
+	//å°†æ•°ç»„é¦–åœ°å€å…³è”æ˜ å°„åœ°å€ç©ºé—´çš„é¦–åœ°å€ï¼Œä½¿å®ƒä»¬æŒ‡å‘åŒä¸€å—å†…å­˜
     memcpy(hMap, &a[0], num * sizeof(int));
 
-	//¿ìÅÅÏß³Ì²ÎÊı
+	//å¿«æ’çº¿ç¨‹å‚æ•°
     ArrInfo arrinfo;
     arrinfo.start = 0;
     arrinfo.end = num - 1;
     arrinfo.len = num;
-	//´´½¨¿ìÅÅÖ÷Ïß³Ì
+	//åˆ›å»ºå¿«æ’ä¸»çº¿ç¨‹
 	HANDLE hQsort = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)Qsort, &arrinfo, 0, NULL);
 	WaitForSingleObject(hQsort, INFINITE);
 	CloseHandle(hQsort);
-	//½«½á¹ûĞ´Èëoutput.txt 
+	//å°†ç»“æœå†™å…¥output.txt 
 	int *result = (int *)hMap;
 	ofstream output("output.txt");
 	for (int i = 0; i < 1000000; i++)

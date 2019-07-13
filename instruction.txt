@@ -1,0 +1,3 @@
+C:\windows\system32\calc.exe
+C:\windows\system32\notepad.exe
+C:\windows\system32\charmap.exe

@@ -1,7 +1,6 @@
 <center><font size =7>OS project3 - </center>
 <center><font size=7>Qsort in Memory-mapped</font></center>
 
-<center><font size = 6>学号：17341126 姓名：莫烜奇</font></center>
 
 要求：
 

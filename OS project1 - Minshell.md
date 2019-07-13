@@ -1,7 +1,5 @@
 <center><font size =7>OS project1 - Minshell</font></center>
 
-<center><font size = 6>学号：17341126 姓名：莫烜奇</font></center>
-
 要求：
 
 •Design and implement a simple command interpreter **min_shell.exe** (a command shell) using the Windows application programming interface (**Windows API**).

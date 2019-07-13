@@ -1,6 +1,5 @@
 <center><font size =7>OS project2 - Producer&Consumer</font></center>
 
-<center><font size = 6>学号：17341126 姓名：莫烜奇</font></center>
 
 要求：
 
